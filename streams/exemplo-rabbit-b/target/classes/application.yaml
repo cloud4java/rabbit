@@ -1,0 +1,36 @@
+spring:
+  rabbitmq:
+    host:  localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud.stream:
+    rabbit:
+      bindings:
+        fila-exemplo-object-input:
+          consumer:
+            durableSubscription: true
+            bindingRoutingKey: fila-exemplo-object-key
+            autoBindDlq: true
+            republishToDlq: true
+            transacted: true
+            dlqTtl: 3000
+            dlqDeadLetterExchange:
+            max-attempts: 1
+#            deadLetterExchange: fila-exemplo-object-DLX
+#            deadLetterRoutingKey: fila-exemplo-object-key.dlq
+            deadLetterQueueName: fila-dlq-exemplo-object
+        fila-exemplo-output:
+          producer.routingKeyExpression: '''fila-exemplo-object-key'''
+        fila-exemplo-object-output:
+          producer.routingKeyExpression: '''fila-exemplo-object-key.dlq'''
+    bindings:
+      fila-exemplo-object-input:
+        destination: exemplo-object-dest
+        group: exemplo-object-group
+        contentType: application/json
+        binder: rabbit
+        consumer:
+          maxAttempts: 1
+spring.cloud.stream.bindings.input.consumer.max-attempts: 1

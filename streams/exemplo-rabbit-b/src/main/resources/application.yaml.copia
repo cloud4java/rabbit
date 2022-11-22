@@ -1,0 +1,63 @@
+spring:
+  rabbitmq:
+    host:  localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud.stream:
+    rabbit:
+      bindings:
+#        authorization-request-input-demo:
+#          consumer:
+#            bindingRoutingKey: payments.authorization.request-demo
+#            autoBindDlq: true
+#            transacted: true
+#            dlqTtl: 15000
+#            dlqDeadLetterExchange:
+#            deadLetterExchange: payments-demo-DLX
+#        fila-exemplo-input:
+#          consumer:
+#            bindingRoutingKey: fila-exemplo-key
+#            autoBindDlq: true
+#            transacted: true
+#            dlqTtl: 15000
+#            dlqDeadLetterExchange:
+#            deadLetterExchange: fila-exemplo-DLX
+        fila-exemplo-object-input:
+          consumer:
+            bindingRoutingKey: fila-exemplo-object-key
+#            autoBindDlq: true
+            transacted: true
+            dlqTtl: 3000
+            dlqDeadLetterExchange:
+#            max-attempts: 3
+            deadLetterExchange: fila-exemplo-object-DLX
+            deadLetterRoutingKey: fila-exemplo-object-key.dlq
+            deadLetterQueueName: fila-dlq-exemplo-object
+        fila-exemplo-output:
+          producer.routingKeyExpression: '''fila-exemplo-object-key'''
+        fila-exemplo-object-output:
+          producer.routingKeyExpression: '''fila-exemplo-object-key.dlq'''
+    bindings:
+      fila-exemplo-object-input:
+        destination: exemplo-object-dest
+        group: exemplo-object-group
+        contentType: application/json
+        binder: rabbit
+        consumer:
+          maxAttempts: 1
+#      authorization-request-input-demo:
+#        destination: payments-demo
+#        contentType: application/json
+#        group: internal.authorization.request-demo
+#        binder: rabbit
+#        consumer:
+#          maxAttempts: 1
+#      fila-exemplo-output:
+#        destination: destination-fila-exemplo.DLX
+#        contentType: application/json
+#        binder: rabbit
+
+
+spring.cloud.stream.bindings.input.consumer.max-attempts: 1
