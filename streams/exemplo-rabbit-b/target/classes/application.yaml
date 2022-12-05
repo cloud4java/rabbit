@@ -18,8 +18,6 @@ spring:
             dlqTtl: 3000
             dlqDeadLetterExchange:
             max-attempts: 1
-#            deadLetterExchange: fila-exemplo-object-DLX
-#            deadLetterRoutingKey: fila-exemplo-object-key.dlq
             deadLetterQueueName: fila-dlq-exemplo-object
         fila-exemplo-output:
           producer.routingKeyExpression: '''fila-exemplo-object-key'''
@@ -34,3 +32,4 @@ spring:
         consumer:
           maxAttempts: 1
 spring.cloud.stream.bindings.input.consumer.max-attempts: 1
+server.port: 8084

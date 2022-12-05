@@ -32,3 +32,4 @@ spring:
         consumer:
           maxAttempts: 1
 spring.cloud.stream.bindings.input.consumer.max-attempts: 1
+server.port: 8084
