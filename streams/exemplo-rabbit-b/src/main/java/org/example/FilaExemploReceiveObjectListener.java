@@ -13,6 +13,7 @@ public class FilaExemploReceiveObjectListener {
     public void listen(UsuarioInput object){
         System.out.println("Escutando um object = " + object);
         if (object.getName() == null) {
+            //TODO: Postar na fila intemediária, por 3 vezes
             throw new IllegalArgumentException("Name é obrigatório");
         }
     }
