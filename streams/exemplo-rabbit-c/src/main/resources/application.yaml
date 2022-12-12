@@ -13,7 +13,7 @@ spring:
             durableSubscription: true
             autoBindDlq: true
             dlqTtl: 3000
-            deadLetterExchange: simple-queue.dlx
+            deadLetterExchange: #simple-queue.dlx
             deadLetterQueueName: simple-queue-with-dlq.dlq
     bindings:
 #      input:
