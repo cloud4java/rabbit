@@ -7,5 +7,7 @@ spring:
   cloud.stream:
     rabbit:
       bindings:
+        user-input:
+
 
 

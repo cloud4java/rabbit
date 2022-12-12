@@ -1,0 +1,27 @@
+spring:
+  rabbitmq:
+    host:  localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud.stream:
+    rabbit:
+      bindings:
+        simple-queue-with-dlq:
+          consumer:
+            durableSubscription: true
+            autoBindDlq: true
+            dlqTtl: 3000
+            deadLetterExchange: simple-queue.dlx
+            deadLetterQueueName: simple-queue-with-dlq.dlq
+    bindings:
+#      input:
+#        consumer:
+#          maxAttempts: 1
+      simple-queue-with-dlq:
+        destination: simple-dest
+        group: simple-group
+        binder: rabbit
+spring.cloud.stream.bindings.input.consumer.max-attempts: 1
+server.port: 8084
